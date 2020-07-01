@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="res/scripts/scenes.js">
+</script>
+<script src="res/scripts/functions.js">
+</script>
+<script>
+var time = 0;var alltime = 0;var TextActive = 0;var textString = "ole";var g_music = 1;var activeItemId = -1;var scene = -1;  var proxy = 60;var objN = 9;var Outro =1;
+var Alert = 0;var CantinaBand = 0; var SecComputer= 0;	var LabDoors = 0; var ArmoryDoors = 0;	var Documents = 0;		
+var Animated = [];Animated[0] = {id:'Locker', nr:0,  Frame1:'res/Interactables/OtwartaSzafka.jpg', Stan:0}; Animated[1] = {id:'Oficer', nr:1,  Frame:['res/Actors/OffStand.png','res/Actors/martwyOff.png'], Stan:0};Animated[2] = {id:'Storm1', nr:2,  Frame:['res/Actors/StormSit.png', 'res/Actors/StormStand.png', 'res/Actors/StormReady.png','res/Actors/StormDead.png'], Stan:0};Animated[3] = {id:'Storm2', nr:3,  Frame:['res/Actors/StormSit.png', 'res/Actors/StormStand.png', 'res/Actors/StormReady.png','res/Actors/StormDead.png'], Stan:1};Animated[4] = {id:'Dym', nr:4,  Frame1:'res/Actors/Dym.png',Frame2:'res/Actors/BlasterHole.png', Stan:0};
+var Items = [];Items[0] = {id:'Oko', nr:0,  ActiveUrl:'res/Interactables/EyeOn.png', InactiveUrl:'res/Interactables/EyeOff.png', Stan:0};
+Items[1] = {id:'Blaster',nr:1, ActiveUrl:'res/Interactables/blasterOn.png',InactiveUrl:'res/Interactables/blasterOff.png',Stan:0};
+Items[2] = {id:'E11',nr:2,ActiveUrl:'res/Interactables/blasterE11On.png', InactiveUrl:'res/Interactables/blasterE11Off.png', EUrl:'res/Interactables/BlasterEEcolor.png',Stan:0};
+Items[3] = {id:'HydroSpanner',nr:3, ActiveUrl:'res/Interactables/HydroOn.png',InactiveUrl:'res/Interactables/HydroOff.png',EUrl:'res/Interactables/HydroSzpanerCOlor.png',Stan:0};
+Items[4] = {id:'CodeCylinder',nr:4,ActiveUrl:'res/Interactables/CodeOn.png', InactiveUrl:'res/Interactables/CodeOff.png',EUrl:'res/Interactables/CodeCyli.png',Stan:0};
+Items[5] = {id:'Thermo',nr:5, ActiveUrl:'res/Interactables/thermoOn.png',InactiveUrl:'res/Interactables/thermoOff.png',EUrl:'res/Interactables/ThermoColor.png',Stan:0};
+var Equipment = [];Equipment.push(Items[0]);Equipment.push(Items[1]);var img = [];var ctx = [];
+</script>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="600" style="border:5px solid #000000;">
+Your browser does not support the canvas element.
+</canvas>
+<script>
+window.addEventListener('load', function () {
+	for(var i = 0; i<objN;i++){
+	img[i] = new Image;
+	ctx[i] = document.getElementById('myCanvas').getContext('2d');
+	};
+	ctxt = document.getElementById('myCanvas').getContext('2d');
+	imgTB = new Image;
+	ctxTB = document.getElementById('myCanvas').getContext('2d');
+	imgTB.src = 'res/Interactables/textbox.jpg';
+	ctxStatus = document.getElementById('myCanvas').getContext('2d');
+	ctxWear = document.getElementById('myCanvas').getContext('2d');
+  img[0].src = 'res/Backgrounds/MenuSW.png';
+  img[1].src = Items[2].InactiveUrl;
+  img[2].src = Items[2].InactiveUrl;
+document.getElementById('myCanvas').onmousemove = function(e){
+var x = e.clientX;
+var y = e.clientY;
+console.log(x+"x"+y);
+if(scene > 0 && x>=500 && y>=540){
+this.style.cursor = 'pointer';
+}
+else if(scene == -1 && proximity(400,490,x,y,200) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 0 && proximity(610,300,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 1 && proximity(401,287,x,y,200) == 1 ){
+this.style.cursor = 'pointer';
+}
+else if(scene == 2 && proximity(401,287,x,y,200) == 1 ){
+this.style.cursor = 'pointer';
+}
+else if(scene == 3 && proximity(564,225,x,y,proxy) == 1 ){
+this.style.cursor = 'pointer';
+}
+else if(scene == 3 && proximity(135,200,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 3 && proximity(614,508,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 4 && proximity(200,300,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 4 && proximity(680,305,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 4 && (y>=470) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 5 && proximity(175,280,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 5 && proximity(40,350,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 5 && proximity(666,380,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 6 && proximity(630,240,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 6 && proximity(150,360,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 6 && proximity(750,295,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 7 && (x < 100) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 7 && proximity(430,240,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 7 && proximity(330,250,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 7 && proximity(575,240,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 8 && (y>500) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 8 && proximity(500,300,x,y,100) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 8 && proximity(320,420,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 8 && proximity(213,275,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 9 && proximity(75,240,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 9 && proximity(390,310,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 9 && (500<y) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 9 && proximity(750,360,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 10 && proximity(525,350,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 10 && (y>470) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 10 && proximity(170,373,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 11 && proximity(400,300,x,y,90) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 11 && (60>x) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 11 && proximity(620,350,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 11 && (710<x) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 15 && (proximity(430,270,x,y,proxy) == 1 || proximity(430,340,x,y,proxy) == 1)){
+this.style.cursor = 'pointer';
+}
+else if(scene == 15 && proximity(640,332,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 15 && (x>300 && y>500) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 15 && proximity(500,332,x,y,20) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 15 && proximity(250,320,x,y,100) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 12 && proximity(390,300,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 12 && (y>500) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 13 && (y > 500) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 13 && proximity(170,310,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 13 && proximity(600,310,x,y,proxy) == 1 && Items[5].Stan == 0){
+this.style.cursor = 'pointer';
+}
+else if(scene == 14 && (y > 500) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 14 && proximity(370,350,x,y,proxy) == 1){
+this.style.cursor = 'pointer';
+}
+else if(scene == 14 && proximity(140,370,x,y,proxy) == 1 && Items[3].Stan == 0){
+this.style.cursor = 'pointer';
+}
+else{
+this.style.cursor = 'crosshair';
+}
+}
+img[0].addEventListener('load', function () {
+ var interval = setInterval(function() {
+	  var s = 2;
+      var x = 0, y = 0;
+      return function () {
+		time++;
+		alltime++;
+		if(time == 5){
+		time = 0;
+		}
+		//myMusic.play();
+		if(Outro == 0){
+		ctx[0].clearRect(0, 0, ctx[0].canvas.width, ctx[0].canvas.height);
+		}
+        ctx[0].drawImage(img[0], 0, 0);
+		if(scene>0 && scene<=16 ){
+		drawMenu(img,ctx);
+		}
+		if(ArmoryDoors == 2 && scene == 15){
+		img[1].src = Animated[4].Frame2;
+		ctx[1].drawImage(img[1], 480, 315);
+		}
+		if(LabDoors == 2 && scene == 11){
+		img[2].src = Animated[4].Frame2;
+		ctx[2].drawImage(img[2], 630,340);
+		}
+		if(ArmoryDoors == 2 && scene == 10){
+		img[1].src = Animated[4].Frame2;
+		ctx[1].drawImage(img[1], 150,309);
+		}
+		if(scene == 7){
+		img[2].src = Animated[2].Frame[Animated[2].Stan];
+		ctx[2].drawImage(img[2], 360,150);
+		if(Items[2].Stan == 0 && Animated[2].Stan != 2 && Animated[2].Stan != 1){
+		img[1].src = Items[2].EUrl;
+		ctx[1].drawImage(img[1], 280,240);
+		}
+		}
+		if(scene == 13 && Items[5].Stan == 0){
+		img[1].src = Items[5].EUrl;
+		ctx[1].drawImage(img[1], 600,280);
+		}
+		if(scene == 14){
+		if(Items[3].Stan == 0)
+		{
+		img[1].src = Items[3].EUrl;
+		ctx[1].drawImage(img[1], 140,350);
+		}
+		}
+		if(scene == 8){
+		img[2].src = Animated[1].Frame[Animated[1].Stan];
+		ctx[2].drawImage(img[2], 400,200);
+		if(Animated[1].Stan == 1 && Items[4].Stan == 0)
+		{
+		img[1].src = Items[4].EUrl;
+		ctx[1].drawImage(img[1], 240,400);
+		}
+		}
+		if(scene == 15){
+		img[2].src = Animated[3].Frame[Animated[3].Stan];
+		ctx[2].drawImage(img[2], 200,300);
+		}
+		if(Documents == 1 && scene == 12){
+		img[2].src ='res/Interactables/Plan.jpg';
+		ctx[2].drawImage(img[2], 300,248);;
+		}
+		if(Alert == -1 && Outro == 0){
+		ctxWear.font = "18pt Calibri";
+		ctxWear.fillStyle = "Gray";
+		ctxWear.fillText("Przebranie", 30, 575);
+		}
+		if(Alert == 1 && Outro == 0){
+		ctxWear.font = "18pt Calibri";
+		ctxWear.fillStyle = "Red";
+		ctxWear.fillText("Alarm", 30, 575);
+		}
+		if(Documents == 1 && Outro == 0){
+		ctxWear.font = "18pt Calibri";
+		ctxWear.fillStyle = "Green";
+		ctxWear.fillText("Plany", 160, 575);
+		}
+		if(TextActive>0){
+		ctxTB.drawImage(imgTB, 10, 20);
+		var tS = textString.split('\n');
+		for (var i = 0; i<tS.length; i++){
+		ctxWear.fillStyle = "White";
+		ctxt.fillText(tS[i], 30, 40 + (i*20) );
+		}
+		}
+		if(scene == 3 && Animated[0].Stan == 0){
+		img[1].src = Animated[0].Frame1;
+		ctx[1].drawImage(img[1], 75, 140);
+		}
+		if(Outro <= 200 && Outro > 0 ){
+		img[0].src = "res/EndFrames/1.jpg"
+		Outro++;
+		}
+		else if(Outro<= 350 && Outro > 200 ){
+		img[0].src = "res/EndFrames/2.jpg"
+		Outro++;
+		}
+		else if(Outro <= 500 && Outro > 350 ){
+		img[0].src = "res/EndFrames/3.jpg"
+		Outro++;
+		}
+		else if(Outro<= 700 && Outro > 500 ){
+		img[0].src = "res/EndFrames/4.jpg"
+		Outro++;
+		}
+		else if(Outro > 700 ){
+		img[0].src = "res/EndFrames/6.jpg"
+		}
+     };
+    }(), 200);
+  }, false);
+}, false);
+myMusic = new sound("res/BGM/0917.mp3");	
+myFX = new sound("res/BGM/blasterA.mp3");
+myPCVoice = new sound("res/BGM/PCVoiceQ.mp3");
+document.getElementById('myCanvas').addEventListener("click",function(event)
+{
+var cx = event.pageX;
+var cy = event.pageY;
+console.log(cx+"x"+cy);
+if(TextActive>0){
+TextActive--;
+}
+else if(TextActive == 0){
+if(cy<540){
+if(scene==-1){
+MainMenu(cx,cy);
+}
+else if(scene==0){
+Briefing(cx,cy);
+}
+else if(scene==1){
+SzybZ(cx,cy);
+}
+else if(scene==2){
+SzybO(cx,cy);
+}
+else if(scene==3){
+Szatnia(cx,cy);
+}
+else if(scene==4){
+SzatniaWejscie(cx,cy);
+}
+else if(scene==5){
+BiuroWejscie(cx,cy);
+}
+else if(scene==6){
+KatynaWejscie(cx,cy);
+}
+else if(scene==7){
+Kantyna(cx,cy);
+}
+else if(scene==8){
+Biuro(cx,cy);
+}
+else if(scene==9){
+WorkshopWejscie(cx,cy);
+}
+else if(scene==10){
+S3(cx,cy);
+}
+else if(scene==11){
+LabWejscie(cx,cy);
+}
+else if(scene==12){
+Lab(cx,cy);
+}
+else if(scene==13){
+SecArm(cx,cy);
+}
+else if(scene==14){
+Workshop(cx,cy);
+}
+else if(scene==15){
+ArmoryWejscie(cx,cy);
+}
+else if(scene==21){  
+}
+else if(scene==69){
+}
+activeItemId = -1;
+this.style.cursor = 'crosshair';
+}
+else if(cy>=540){
+loc = 550
+  for(i = 0;i<Equipment.length;i++){
+	if(proximity(loc,575,cx,cy,30) == 1){
+		if(Equipment[i].nr == activeItemId){
+		activeItemId = -1;
+		}
+		else{
+		activeItemId=Equipment[i].nr
+		}
+	}
+  loc += 50;
+  }
+}
+}
+}
+,false);
+</script>
+</body>
+</html>

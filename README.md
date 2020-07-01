@@ -1,1 +1,3 @@
-# SWRS_Public
+A point and click game i wrote to pass a javascript class. All of the code was wriiten from scratch by myself, except for the music player class(That was stackoverflow.com, altough i adopted it a little bit to fit my needs). Most of the assets are open source and a few were made by my other collegues. It's not pretty but i believe it serves as a proof that i kinda sorta maybe know how to write games in hmtl5/javascript.
+
+To run it just use SW_Rebel_Scum_html. Controls are entirely based on mouse and LMB. UI requires some work.
